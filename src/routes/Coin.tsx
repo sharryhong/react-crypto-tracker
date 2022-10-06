@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
+import * as CoinStyle from "./CoinStyle";
 
 export interface InfoType {
   id: string;
@@ -69,9 +70,8 @@ function Coin() {
 
   const [info, setInfo] = useState<InfoType>();
   const [price, setPrice] = useState<PriceType>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setLoading(true);
     (async () => {
       const infoData = await (
         await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
@@ -90,7 +90,37 @@ function Coin() {
       <Style.Header>
         <Style.Title>{state?.name || info?.name}</Style.Title>
       </Style.Header>
-      {loading ? <Loader /> : <p>{price?.quotes.USD.price}</p>}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <CoinStyle.Overview>
+            <CoinStyle.OverviewItem>
+              <CoinStyle.ItemLabel>Rank</CoinStyle.ItemLabel>
+              <span>{info?.rank}</span>
+            </CoinStyle.OverviewItem>
+            <CoinStyle.OverviewItem>
+              <CoinStyle.ItemLabel>Symbol</CoinStyle.ItemLabel>
+              <span>{info?.symbol}</span>
+            </CoinStyle.OverviewItem>
+            <CoinStyle.OverviewItem>
+              <CoinStyle.ItemLabel>Open Source</CoinStyle.ItemLabel>
+              <span>{info?.open_source}</span>
+            </CoinStyle.OverviewItem>
+          </CoinStyle.Overview>
+          <CoinStyle.Description>{info?.description}</CoinStyle.Description>
+          <CoinStyle.Overview>
+            <CoinStyle.OverviewItem>
+              <CoinStyle.ItemLabel>Total Supply</CoinStyle.ItemLabel>
+              <span>{price?.total_supply}</span>
+            </CoinStyle.OverviewItem>
+            <CoinStyle.OverviewItem>
+              <CoinStyle.ItemLabel>Max Supply</CoinStyle.ItemLabel>
+              <span>{price?.max_supply}</span>
+            </CoinStyle.OverviewItem>
+          </CoinStyle.Overview>
+        </>
+      )}
     </Style.Container>
   );
 }
