@@ -3,28 +3,84 @@ import { useLocation, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
 
-interface CoinType {
+export interface InfoType {
   id: string;
   name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+  logo: string;
   description: string;
+  message: string;
+  open_source: boolean;
+  started_at: Date;
+  development_status: string;
+  hardware_wallet: boolean;
+  proof_type: string;
+  org_structure: string;
+  hash_algorithm: string;
+  whitepaper: {
+    link: string;
+    thumbnail: string;
+  };
+  first_data_at: Date;
+  last_data_at: Date;
+}
+
+interface PriceType {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  circulating_supply: number;
+  total_supply: number;
+  max_supply: number;
+  beta_value: number;
+  first_data_at: Date;
+  last_updated: Date;
+  quotes: {
+    USD: {
+      price: number;
+      volume_24h: number;
+      volume_24h_change_24h: number;
+      market_cap: number;
+      market_cap_change_24h: number;
+      percent_change_15m: number;
+      percent_change_30m: number;
+      percent_change_1h: number;
+      percent_change_6h: number;
+      percent_change_12h: number;
+      percent_change_24h: number;
+      percent_change_7d: number;
+      percent_change_30d: number;
+      percent_change_1y: number;
+      ath_price: number;
+      ath_date: Date;
+      percent_from_price_ath: number;
+    };
+  };
 }
 
 function Coin() {
   const { coinId } = useParams();
-  const {
-    state: { name },
-  } = useLocation();
+  const { state } = useLocation();
 
-  const [coin, setCoin] = useState<CoinType>();
+  const [info, setInfo] = useState<InfoType>();
+  const [price, setPrice] = useState<PriceType>();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     (async () => {
-      const response = await fetch(
-        `https://api.coinpaprika.com/v1/coins/${coinId}`
-      );
-      const json = await response.json();
-      setCoin(json);
+      const infoData = await (
+        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+      ).json();
+      const priceData = await (
+        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+      ).json();
+      setInfo(infoData);
+      setPrice(priceData);
       setLoading(false);
     })();
   }, [coinId]);
@@ -32,9 +88,9 @@ function Coin() {
   return (
     <Style.Container>
       <Style.Header>
-        <Style.Title>{name || coin?.name}</Style.Title>
+        <Style.Title>{state?.name || info?.name}</Style.Title>
       </Style.Header>
-      {loading ? <Loader /> : <p>{coin?.description}</p>}
+      {loading ? <Loader /> : <p>{price?.quotes.USD.price}</p>}
     </Style.Container>
   );
 }
