@@ -1,72 +1,48 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
+import * as Style from "./CoinsStyle";
 
-const Container = styled.div`
-  padding: 0 1em;
-`;
-const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vh;
-`;
-const CoinList = styled.ul``;
-const Coin = styled.li`
-  margin-bottom: 0.5em;
-  border-radius: 0.25em;
-  color: ${(props) => props.theme.textColor};
-  background-color: ${(props) => props.theme.lightBgColor};
-  a {
-    display: block;
-    padding: 1em;
-    transition: color 0.3s ease-in;
-  }
-  &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
-    }
-  }
-`;
-const Title = styled.h1`
-  font-size: 2.5rem;
-  color: ${(props) => props.theme.accentColor};
-`;
-
-const coins = [
-  {
-    id: "btc-bitcoin",
-    name: "Bitcoin",
-    symbol: "BTC",
-    rank: 1,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-  {
-    id: "eth-ethereum",
-    name: "Ethereum",
-    symbol: "ETH",
-    rank: 2,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-];
+interface CoinType {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+}
 
 function Coins() {
+  const [coins, setCoins] = useState<CoinType[]>([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const response = await fetch("https://api.coinpaprika.com/v1/coins");
+      const json = await response.json();
+      setCoins(json.slice(0, 100));
+      setLoading(false);
+    })();
+  }, []);
+
   return (
-    <Container>
-      <Header>
-        <Title>Coin</Title>
-      </Header>
-      <CoinList>
-        {coins.map((coin) => (
-          <Coin key={coin.id}>
-            <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
-          </Coin>
-        ))}
-      </CoinList>
-    </Container>
+    <Style.Container>
+      <Style.Header>
+        <Style.Title>Coin</Style.Title>
+      </Style.Header>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Style.CoinList>
+          {coins.map((coin) => (
+            <Style.Coin key={coin.id}>
+              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+            </Style.Coin>
+          ))}
+        </Style.CoinList>
+      )}
+    </Style.Container>
   );
 }
 
