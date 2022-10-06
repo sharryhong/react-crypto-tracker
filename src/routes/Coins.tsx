@@ -37,7 +37,13 @@ function Coins() {
         <Style.CoinList>
           {coins.map((coin) => (
             <Style.Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link to={`/${coin.id}`} state={{ name: coin.name }}>
+                <Style.Icon
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt={coin.name}
+                />
+                {coin.name} &rarr;
+              </Link>
             </Style.Coin>
           ))}
         </Style.CoinList>

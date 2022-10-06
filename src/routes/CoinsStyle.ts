@@ -18,7 +18,8 @@ export const Coin = styled.li`
   color: ${(props) => props.theme.textColor};
   background-color: ${(props) => props.theme.lightBgColor};
   a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 1em;
     transition: color 0.2s ease-in;
   }
@@ -31,4 +32,9 @@ export const Coin = styled.li`
 export const Title = styled.h1`
   font-size: 2.5rem;
   color: ${(props) => props.theme.accentColor};
+`;
+export const Icon = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5em;
 `;
