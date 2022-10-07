@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import {
   Link,
@@ -5,6 +6,7 @@ import {
   useLocation,
   useMatch,
   useParams,
+  useNavigate,
 } from "react-router-dom";
 import { fetchCoinInfo, fetchCoinPrice } from "../apis/coin";
 import Loader from "../components/Loader";
@@ -76,6 +78,11 @@ function Coin() {
   const { state } = useLocation();
   const priceMatch = useMatch(`${process.env.PUBLIC_URL}/:coinId/price`);
   const chartMatch = useMatch(`${process.env.PUBLIC_URL}/:coinId/chart`);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(`${process.env.PUBLIC_URL}/${coinId}/chart`);
+  }, [coinId, navigate]);
 
   const { isLoading: isLoadingInfo, data: info } = useQuery<InfoType>(
     ["info", coinId],

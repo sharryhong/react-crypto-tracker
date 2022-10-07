@@ -23,6 +23,14 @@ const chartOption = {
   chart: {
     id: "candlestick",
   },
+  xaxis: {
+    labels: {
+      show: false,
+    },
+    axisTicks: {
+      show: false,
+    },
+  },
 };
 
 function CoinChart() {
