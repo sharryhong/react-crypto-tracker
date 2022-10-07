@@ -74,8 +74,8 @@ interface PriceType {
 function Coin() {
   const { coinId } = useParams();
   const { state } = useLocation();
-  const priceMatch = useMatch("/:coinId/price");
-  const chartMatch = useMatch("/:coinId/chart");
+  const priceMatch = useMatch(`${process.env.PUBLIC_URL}/:coinId/price`);
+  const chartMatch = useMatch(`${process.env.PUBLIC_URL}/:coinId/chart`);
 
   const { isLoading: isLoadingInfo, data: info } = useQuery<InfoType>(
     ["info", coinId],
