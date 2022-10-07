@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useMatch,
+  useParams,
+} from "react-router-dom";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
 import * as CoinStyle from "./CoinStyle";
 
-export interface InfoType {
+interface InfoType {
   id: string;
   name: string;
   symbol: string;
@@ -67,6 +73,8 @@ interface PriceType {
 function Coin() {
   const { coinId } = useParams();
   const { state } = useLocation();
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
 
   const [info, setInfo] = useState<InfoType>();
   const [price, setPrice] = useState<PriceType>();
@@ -119,6 +127,17 @@ function Coin() {
               <span>{price?.max_supply}</span>
             </CoinStyle.OverviewItem>
           </CoinStyle.Overview>
+
+          <CoinStyle.Tabs>
+            <CoinStyle.Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </CoinStyle.Tab>
+            <CoinStyle.Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </CoinStyle.Tab>
+          </CoinStyle.Tabs>
+
+          <Outlet />
         </>
       )}
     </Style.Container>
