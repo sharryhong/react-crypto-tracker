@@ -78,11 +78,11 @@ function Coin() {
   const chartMatch = useMatch("/:coinId/chart");
 
   const { isLoading: isLoadingInfo, data: info } = useQuery<InfoType>(
-    [`info${coinId}`],
+    ["info", coinId],
     () => fetchCoinInfo(`${coinId}`)
   );
   const { isLoading: isLoadingPrice, data: price } = useQuery<PriceType>(
-    [`price${coinId}`],
+    ["price", coinId],
     () => fetchCoinPrice(`${coinId}`)
   );
 
