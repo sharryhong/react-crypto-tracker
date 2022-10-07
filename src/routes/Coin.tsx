@@ -89,7 +89,9 @@ function Coin() {
   return (
     <Style.Container>
       <Style.Header>
-        <Style.BackButton to="/">&lsaquo;Home</Style.BackButton>
+        <Style.BackButton to={`${process.env.PUBLIC_URL}`}>
+          &lsaquo;Home
+        </Style.BackButton>
         <Style.Title>{state?.name || info?.name}</Style.Title>
       </Style.Header>
       {isLoadingInfo || isLoadingPrice ? (
