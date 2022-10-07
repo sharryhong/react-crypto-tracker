@@ -13,7 +13,10 @@ interface CoinType {
 }
 
 function Coins() {
-  const { isLoading, data } = useQuery<CoinType[]>(["allCoins"], fetchCoins);
+  const { isLoading, data: coins } = useQuery<CoinType[]>(
+    ["allCoins"],
+    fetchCoins
+  );
 
   return (
     <Style.Container>
@@ -24,8 +27,8 @@ function Coins() {
         <Loader />
       ) : (
         <Style.CoinList>
-          {data &&
-            data.map((coin) => (
+          {coins &&
+            coins.map((coin) => (
               <Style.Coin key={coin.id}>
                 <Link to={`/${coin.id}`} state={{ name: coin.name }}>
                   <Style.Icon

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import {
   Link,
   Outlet,
@@ -6,6 +6,7 @@ import {
   useMatch,
   useParams,
 } from "react-router-dom";
+import { fetchCoinInfo, fetchCoinPrice } from "../apis/coin";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
 import * as CoinStyle from "./CoinStyle";
@@ -76,29 +77,22 @@ function Coin() {
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
-  const [info, setInfo] = useState<InfoType>();
-  const [price, setPrice] = useState<PriceType>();
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      setInfo(infoData);
-      setPrice(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  const { isLoading: isLoadingInfo, data: info } = useQuery<InfoType>(
+    [`info${coinId}`],
+    () => fetchCoinInfo(`${coinId}`)
+  );
+  const { isLoading: isLoadingPrice, data: price } = useQuery<PriceType>(
+    [`price${coinId}`],
+    () => fetchCoinPrice(`${coinId}`)
+  );
 
   return (
     <Style.Container>
       <Style.Header>
+        <Style.BackButton to="/">&lsaquo;Home</Style.BackButton>
         <Style.Title>{state?.name || info?.name}</Style.Title>
       </Style.Header>
-      {loading ? (
+      {isLoadingInfo || isLoadingPrice ? (
         <Loader />
       ) : (
         <>

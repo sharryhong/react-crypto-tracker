@@ -1,5 +1,16 @@
+const BASE_URL = "https://api.coinpaprika.com/v1";
+
 export async function fetchCoins() {
-  const response = await fetch("https://api.coinpaprika.com/v1/coins");
-  const json = await response.json();
-  return json.slice(0, 100);
+  const data = await (await fetch(`${BASE_URL}/coins`)).json();
+  return data.slice(0, 100);
+}
+
+export async function fetchCoinInfo(coinId: string) {
+  const data = await (await fetch(`${BASE_URL}/coins/${coinId}`)).json();
+  return data;
+}
+
+export async function fetchCoinPrice(coinId: string) {
+  const data = await (await fetch(`${BASE_URL}/tickers/${coinId}`)).json();
+  return data;
 }
