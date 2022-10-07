@@ -108,8 +108,8 @@ function Coin() {
               <span>{info?.symbol}</span>
             </CoinStyle.OverviewItem>
             <CoinStyle.OverviewItem>
-              <CoinStyle.ItemLabel>Open Source</CoinStyle.ItemLabel>
-              <span>{info?.open_source}</span>
+              <CoinStyle.ItemLabel>Price</CoinStyle.ItemLabel>
+              <span>{price?.quotes.USD.price}</span>
             </CoinStyle.OverviewItem>
           </CoinStyle.Overview>
           <CoinStyle.Description>{info?.description}</CoinStyle.Description>
@@ -125,19 +125,19 @@ function Coin() {
           </CoinStyle.Overview>
 
           <CoinStyle.Tabs>
-            <CoinStyle.Tab isActive={priceMatch !== null}>
-              <Link to={`${process.env.PUBLIC_URL}/${coinId}/price`}>
-                Price
-              </Link>
-            </CoinStyle.Tab>
             <CoinStyle.Tab isActive={chartMatch !== null}>
               <Link to={`${process.env.PUBLIC_URL}/${coinId}/chart`}>
                 Chart
               </Link>
             </CoinStyle.Tab>
+            <CoinStyle.Tab isActive={priceMatch !== null}>
+              <Link to={`${process.env.PUBLIC_URL}/${coinId}/price`}>
+                Price
+              </Link>
+            </CoinStyle.Tab>
           </CoinStyle.Tabs>
 
-          <Outlet />
+          <Outlet context={{ coinId }} />
         </>
       )}
     </Style.Container>
