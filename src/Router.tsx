@@ -8,8 +8,8 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Coins />} />
-        <Route path="/coin/:coinId" element={<Coin />}>
+        <Route path={`${process.env.PUBLIC_URL}/`} element={<Coins />} />
+        <Route path={`${process.env.PUBLIC_URL}/:coinId`} element={<Coin />}>
           <Route path="price" element={<CoinPrice />} />
           <Route path="chart" element={<CoinChart />} />
         </Route>
