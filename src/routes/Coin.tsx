@@ -124,10 +124,10 @@ function Coin() {
 
           <CoinStyle.Tabs>
             <CoinStyle.Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`/coin/${coinId}/price`}>Price</Link>
             </CoinStyle.Tab>
             <CoinStyle.Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/coin/${coinId}/chart`}>Chart</Link>
             </CoinStyle.Tab>
           </CoinStyle.Tabs>
 
