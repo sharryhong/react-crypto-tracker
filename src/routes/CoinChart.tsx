@@ -21,12 +21,11 @@ interface ChartType {
 
 const chartOption = {
   chart: {
-    id: "candlestick",
-  },
-  xaxis: {
-    labels: {
+    toolbar: {
       show: false,
     },
+  },
+  xaxis: {
     axisTicks: {
       show: false,
     },
@@ -50,15 +49,9 @@ function CoinChart() {
           series={[
             {
               data: chartData?.map((price) => {
-                const time = new Date(price.time_close);
-                const hours = ("0" + time.getHours()).slice(-2);
-                const minutes = ("0" + time.getMinutes()).slice(-2);
-                const seconds = ("0" + time.getSeconds()).slice(-2);
-                const timeString = hours + ":" + minutes + ":" + seconds;
-
                 return {
-                  x: timeString,
-                  y: [price.open, price.close, price.low, price.high],
+                  x: new Date(price.time_close * 1000).toLocaleDateString(),
+                  y: [price.open, price.high, price.low, price.close],
                 };
               }) as [],
             },

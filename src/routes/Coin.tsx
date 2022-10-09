@@ -81,8 +81,8 @@ function Coin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(`${process.env.PUBLIC_URL}/${coinId}/chart`);
-  }, [coinId, navigate]);
+    !priceMatch && navigate(`${process.env.PUBLIC_URL}/${coinId}/chart`);
+  }, [coinId, navigate, priceMatch]);
 
   const { isLoading: isLoadingInfo, data: info } = useQuery<InfoType>(
     ["info", coinId],
