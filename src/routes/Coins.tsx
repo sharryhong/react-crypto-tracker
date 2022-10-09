@@ -4,6 +4,8 @@ import { Helmet } from "react-helmet-async";
 import { fetchCoins } from "../apis/coin";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
+import { isDarkAtom } from "../atoms";
+import { useRecoilState } from "recoil";
 
 interface CoinType {
   id: string;
@@ -18,6 +20,10 @@ function Coins() {
     ["allCoins"],
     fetchCoins
   );
+  const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+  const onChangeMode = () => {
+    setIsDark(!isDark);
+  };
 
   return (
     <Style.Container>
@@ -26,6 +32,9 @@ function Coins() {
       </Helmet>
       <Style.Header>
         <Style.Title>Coin</Style.Title>
+        <Style.ThemeButton onClick={onChangeMode}>
+          Toggle Mode
+        </Style.ThemeButton>
       </Style.Header>
       {isLoading ? (
         <Loader />

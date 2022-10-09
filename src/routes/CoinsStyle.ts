@@ -48,3 +48,7 @@ export const Icon = styled.img`
   height: 1.5rem;
   margin-right: 0.5em;
 `;
+export const ThemeButton = styled.button`
+  position: absolute;
+  right: 0;
+`;

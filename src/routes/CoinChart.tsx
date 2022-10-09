@@ -3,6 +3,8 @@ import { useOutletContext } from "react-router-dom";
 import { fetchCoinHistory } from "../apis/coin";
 import Chart from "react-apexcharts";
 import Loader from "../components/Loader";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 interface Props {
   coinId: string;
@@ -19,25 +21,13 @@ interface ChartType {
   market_cap: number;
 }
 
-const chartOption = {
-  chart: {
-    toolbar: {
-      show: false,
-    },
-  },
-  xaxis: {
-    axisTicks: {
-      show: false,
-    },
-  },
-};
-
 function CoinChart() {
   const { coinId } = useOutletContext<Props>();
   const { isLoading, data: chartData } = useQuery<ChartType[]>(
     ["chart", coinId],
     () => fetchCoinHistory(`${coinId}`)
   );
+  const isDark = useRecoilValue(isDarkAtom);
 
   return (
     <>
@@ -45,7 +35,21 @@ function CoinChart() {
         <Loader />
       ) : (
         <Chart
-          options={chartOption}
+          options={{
+            theme: {
+              mode: isDark ? "dark" : "light",
+            },
+            chart: {
+              toolbar: {
+                show: false,
+              },
+            },
+            xaxis: {
+              axisTicks: {
+                show: false,
+              },
+            },
+          }}
           series={[
             {
               data: chartData?.map((price) => {
