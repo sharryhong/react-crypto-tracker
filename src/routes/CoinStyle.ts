@@ -29,9 +29,11 @@ export const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
   border-radius: 0.25em;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) =>
+    props.isActive ? props.theme.bgColor : props.theme.textColor};
+  border: 1px solid ${(props) => props.theme.accentColor};
   background-color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.lightAccentColor};
+    props.isActive ? props.theme.accentColor : props.theme.bgColor};
   a {
     display: block;
     padding: 0.5em;
