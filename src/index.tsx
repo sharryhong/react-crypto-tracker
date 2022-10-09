@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import { theme } from "./styles/theme";
 
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>

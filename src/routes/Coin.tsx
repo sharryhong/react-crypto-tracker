@@ -8,6 +8,7 @@ import {
   useParams,
   useNavigate,
 } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { fetchCoinInfo, fetchCoinPrice } from "../apis/coin";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
@@ -95,6 +96,9 @@ function Coin() {
 
   return (
     <Style.Container>
+      <Helmet>
+        <title>{state?.name || info?.name}</title>
+      </Helmet>
       <Style.Header>
         <Style.BackButton to={`${process.env.PUBLIC_URL}`}>
           &lsaquo;Home

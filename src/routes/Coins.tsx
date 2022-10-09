@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { fetchCoins } from "../apis/coin";
 import Loader from "../components/Loader";
 import * as Style from "./CoinsStyle";
@@ -20,6 +21,9 @@ function Coins() {
 
   return (
     <Style.Container>
+      <Helmet>
+        <title>Crypto Tracker</title>
+      </Helmet>
       <Style.Header>
         <Style.Title>Coin</Style.Title>
       </Style.Header>
