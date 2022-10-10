@@ -40,6 +40,25 @@ interface InfoType {
   last_data_at: Date;
 }
 
+export interface QuotesType {
+  price: number;
+  volume_24h: number;
+  volume_24h_change_24h: number;
+  market_cap: number;
+  market_cap_change_24h: number;
+  percent_change_15m: number;
+  percent_change_30m: number;
+  percent_change_1h: number;
+  percent_change_6h: number;
+  percent_change_12h: number;
+  percent_change_24h: number;
+  percent_change_7d: number;
+  percent_change_30d: number;
+  percent_change_1y: number;
+  ath_price: number;
+  ath_date: Date;
+  percent_from_price_ath: number;
+}
 interface PriceType {
   id: string;
   name: string;
@@ -52,25 +71,7 @@ interface PriceType {
   first_data_at: Date;
   last_updated: Date;
   quotes: {
-    USD: {
-      price: number;
-      volume_24h: number;
-      volume_24h_change_24h: number;
-      market_cap: number;
-      market_cap_change_24h: number;
-      percent_change_15m: number;
-      percent_change_30m: number;
-      percent_change_1h: number;
-      percent_change_6h: number;
-      percent_change_12h: number;
-      percent_change_24h: number;
-      percent_change_7d: number;
-      percent_change_30d: number;
-      percent_change_1y: number;
-      ath_price: number;
-      ath_date: Date;
-      percent_from_price_ath: number;
-    };
+    USD: QuotesType;
   };
 }
 
@@ -148,7 +149,7 @@ function Coin() {
             </CoinStyle.Tab>
           </CoinStyle.Tabs>
 
-          <Outlet context={{ coinId }} />
+          <Outlet context={{ coinId, price: price?.quotes.USD }} />
         </>
       )}
     </Style.Container>
