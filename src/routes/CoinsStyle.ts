@@ -51,4 +51,7 @@ export const Icon = styled.img`
 export const ThemeButton = styled.button`
   position: absolute;
   right: 0;
+  padding: 0.25em 0.5em;
+  font-size: 0.875rem;
+  border-radius: 0.25em;
 `;

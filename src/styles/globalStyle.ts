@@ -53,7 +53,12 @@ a {
 	text-decoration: none;
 }
 button {
+	font-family: inherit;
 	cursor: pointer;
+	color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.accentColor};
+  border-color: ${(props) => props.theme.accentColor};
+	border-style:none;
 }
 * {
 	box-sizing: border-box;
